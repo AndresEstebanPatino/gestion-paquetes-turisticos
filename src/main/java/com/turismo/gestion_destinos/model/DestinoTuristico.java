@@ -1,5 +1,6 @@
 package com.turismo.gestion_destinos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class DestinoTuristico {
     private Double precio;
 
     @ManyToMany(mappedBy = "destinosAsignados")
+    @JsonIgnore
     private List<Usuario> usuarios;
 
     // Getters y Setters
