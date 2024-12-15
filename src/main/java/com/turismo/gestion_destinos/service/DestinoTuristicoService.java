@@ -3,6 +3,7 @@ package com.turismo.gestion_destinos.service;
 import com.turismo.gestion_destinos.model.DestinoTuristico;
 import com.turismo.gestion_destinos.model.Usuario;
 import com.turismo.gestion_destinos.repository.DestinoTuristicoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,10 +35,12 @@ public class DestinoTuristicoService {
 
     }
 
+    @Transactional
     public void eliminarDestinoTuristico(Long destinoTuristicoId){
         DestinoTuristico destinoTuristico = destinoTuristicoRepository.findById(destinoTuristicoId)
                 .orElseThrow(()-> new RuntimeException("no se encontró el destino"));
 
+        destinoTuristico.getUsuarios().forEach(usuario -> usuario.getDestinosAsignados().remove(destinoTuristico));
         destinoTuristicoRepository.delete(destinoTuristico);
     }
 }
